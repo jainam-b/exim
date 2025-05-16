@@ -43,13 +43,68 @@ const NavbarWithForm: React.FC = () => {
   };
 
   return (
-    <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'} bg-transparent`}>
+    <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'} bg-white`}>
       <div className="container mx-auto px-4">
-        {!isScrolled ? (
-          // Regular Navbar
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <div className="mr-2">
+        {/* Regular Navbar - Always visible on mobile */}
+        <div className={`md:hidden flex items-center justify-between`}>
+          <div className="flex items-center">
+            <div className="mr-2">
+              <Image 
+                src="/logo/logo.png" 
+                alt="Corpbiz Logo" 
+                width={150} 
+                height={150}
+                className="h-12 w-auto"
+              />
+            </div>
+          </div>
+          <div className="flex items-center space-x-4">
+            <a href="tel:9121230280" className="flex items-center text-amber-500">
+              <Phone size={18} className="mr-1" />
+              <span className="hidden sm:inline">9121230280</span>
+            </a>
+            <a href="https://wa.me/9289379709" className="flex items-center text-amber-500">
+              <MessageSquare size={18} className="mr-1" />
+              <span className="hidden sm:inline">9289379709</span>
+            </a>
+           
+          </div>
+        </div>
+
+        {/* Desktop Content - Regular navbar or Form based on scroll */}
+        <div className="hidden md:block">
+          {!isScrolled ? (
+            // Regular Navbar for desktop
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="mr-2">
+                  <Image 
+                    src="/logo/logo.png" 
+                    alt="Corpbiz Logo" 
+                    width={150} 
+                    height={150}
+                    className="h-20 w-auto"
+                  />
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <a href="tel:9121230280" className="flex items-center text-amber-500">
+                  <Phone size={18} className="mr-1" />
+                  <span>9121230280</span>
+                </a>
+                <a href="https://wa.me/9289379709" className="flex items-center text-amber-500">
+                  <MessageSquare size={18} className="mr-1" />
+                  <span>9289379709</span>
+                </a>
+                <button className="text-blue-800 px-4 py-2 rounded bg-blue-100 transition-colors text-base">
+                  Book an Appointment
+                </button>
+              </div>
+            </div>
+          ) : (
+            // Form Navbar for desktop
+            <form onSubmit={handleSubmit} className="flex flex-wrap items-center justify-between text-black">
+              <div className="mr-4">
                 <Image 
                   src="/logo/logo.png" 
                   alt="Corpbiz Logo" 
@@ -58,93 +113,67 @@ const NavbarWithForm: React.FC = () => {
                   className="h-20 w-auto"
                 />
               </div>
-            </div>
-            <div className="flex items-center space-x-6">
-              <a href="tel:9121230280" className="flex items-center text-amber-500">
-                <Phone size={18} className="mr-1" />
-                <span>9121230280</span>
-              </a>
-              <a href="https://wa.me/9289379709" className="flex items-center text-amber-500">
-                <MessageSquare size={18} className="mr-1" />
-                <span>9289379709</span>
-              </a>
-              <button className="bg-white text-blue-800 px-4 py-2 rounded hover:bg-blue-100 transition-colors">
-                Book an Appointment
-              </button>
-            </div>
-          </div>
-        ) : (
-          // Form Navbar
-          <form onSubmit={handleSubmit} className="flex flex-wrap items-center justify-between gap-2 bg-black/50 shadow-md rounded-lg px-4">
-            <div className="mr-4">
-              <Image 
-                src="/logo/logo.png" 
-                alt="Corpbiz Logo" 
-                width={300} 
-                height={300}
-                className="h-20 w-auto"
-              />
-            </div>
-            
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              value={formData.name}
-              onChange={handleChange}
-              className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-            
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-              className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-            
-            <div className="flex">
-              <div className="flex items-center px-3 py-2 bg-black rounded-l border border-r-0 border-gray-300">
-                {/* <Image src="/india-flag.png" alt="India" width={20} height={15} /> */}
-                <span className="ml-1">+91</span>
-              </div>
+              
               <input
-                type="tel"
-                name="mobile"
-                placeholder="Mobile Number"
-                value={formData.mobile}
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                value={formData.name}
                 onChange={handleChange}
-                className="px-3 py-2 rounded-r border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
-            </div>
-            
-            <select
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-              className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            >
-              <option value="">Select State</option>
-              <option value="delhi">Delhi</option>
-              <option value="maharashtra">Maharashtra</option>
-              <option value="karnataka">Karnataka</option>
-              <option value="tamilnadu">Tamil Nadu</option>
-              {/* Add more states as needed */}
-            </select>
-            
-            <button
-              type="submit"
-              className="bg-amber-500 text-white px-6 py-2 rounded font-semibold hover:bg-amber-600 transition-colors"
-            >
-              GET STARTED
-            </button>
-          </form>
-        )}
+              
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleChange}
+                className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+              
+              <div className="flex">
+                <div className="flex items-center px-3 py-2 bg-black/30 rounded-l border border-r-0 border-gray-300">
+                  {/* <Image src="/india-flag.png" alt="India" width={20} height={15} /> */}
+                  <span className="ml-1">+91</span>
+                </div>
+                <input
+                  type="tel"
+                  name="mobile"
+                  placeholder="Mobile Number"
+                  value={formData.mobile}
+                  onChange={handleChange}
+                  className="px-3 py-2 rounded-r border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              
+              <select
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+                <option value="">Select State</option>
+                <option value="delhi">Delhi</option>
+                <option value="maharashtra">Maharashtra</option>
+                <option value="karnataka">Karnataka</option>
+                <option value="tamilnadu">Tamil Nadu</option>
+                {/* Add more states as needed */}
+              </select>
+              
+              <button
+                type="submit"
+                className="bg-blue-100 text-black px-6 py-2 rounded font-semibold hover:bg-blue-300 transition-colors"
+              >
+                GET STARTED
+              </button>
+            </form>
+          )}
+        </div>
       </div>
     </div>
   );
